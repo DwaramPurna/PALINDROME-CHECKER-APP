@@ -26,7 +26,7 @@ public class Main {
             uc2Reversed = uc2Reversed + uc2Word.charAt(i);
         }
 
-        // Check palindrome (UC2 logic, case-sensitive)
+        // Check palindrome (case-sensitive)
         if (uc2Word.equals(uc2Reversed)) {
             System.out.println("UC2: The word \"" + uc2Word + "\" is a Palindrome.");
         } else {
@@ -52,6 +52,34 @@ public class Main {
             System.out.println("UC3: The word \"" + uc3Word + "\" is NOT a Palindrome.");
         }
         System.out.println("UC3 Completed Successfully.");
+        System.out.println("-------------------------------------");
+        System.out.println();
+
+        // ================= UC4: Character Array Based Palindrome Check =================
+        String uc4Word = "Level"; // Hardcoded string for UC4 (mixed case)
+        char[] charArray = uc4Word.toLowerCase().toCharArray(); // Convert to lowercase for case-insensitive check
+
+        boolean isPalindrome = true;
+        int start = 0;
+        int end = charArray.length - 1;
+
+        // Two-pointer technique
+        while (start < end) {
+            if (charArray[start] != charArray[end]) {
+                isPalindrome = false;
+                break;
+            }
+            start++;
+            end--;
+        }
+
+        // Display result
+        if (isPalindrome) {
+            System.out.println("UC4: The word \"" + uc4Word + "\" is a Palindrome (Using char array).");
+        } else {
+            System.out.println("UC4: The word \"" + uc4Word + "\" is NOT a Palindrome (Using char array).");
+        }
+        System.out.println("UC4 Completed Successfully.");
         System.out.println("-------------------------------------");
     }
 }
