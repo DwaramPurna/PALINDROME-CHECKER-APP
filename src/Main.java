@@ -1,3 +1,5 @@
+import java.util.Stack;
+
 public class Main {
 
     // Application constants
@@ -57,16 +59,16 @@ public class Main {
 
         // ================= UC4: Character Array Based Palindrome Check =================
         String uc4Word = "Level"; // Hardcoded string for UC4 (mixed case)
-        char[] charArray = uc4Word.toLowerCase().toCharArray(); // Convert to lowercase for case-insensitive check
+        char[] charArray = uc4Word.toLowerCase().toCharArray(); // Convert to lowercase
 
-        boolean isPalindrome = true;
+        boolean isPalindromeUC4 = true;
         int start = 0;
         int end = charArray.length - 1;
 
         // Two-pointer technique
         while (start < end) {
             if (charArray[start] != charArray[end]) {
-                isPalindrome = false;
+                isPalindromeUC4 = false;
                 break;
             }
             start++;
@@ -74,12 +76,38 @@ public class Main {
         }
 
         // Display result
-        if (isPalindrome) {
+        if (isPalindromeUC4) {
             System.out.println("UC4: The word \"" + uc4Word + "\" is a Palindrome (Using char array).");
         } else {
             System.out.println("UC4: The word \"" + uc4Word + "\" is NOT a Palindrome (Using char array).");
         }
         System.out.println("UC4 Completed Successfully.");
+        System.out.println("-------------------------------------");
+        System.out.println();
+
+        // ================= UC5: Stack-Based Palindrome Check =================
+        String uc5Word = "Level"; // Hardcoded string for UC5 (mixed case)
+        String lowerCaseUC5 = uc5Word.toLowerCase();
+        Stack<Character> stack = new Stack<>();
+
+        // Push each character into stack
+        for (int i = 0; i < lowerCaseUC5.length(); i++) {
+            stack.push(lowerCaseUC5.charAt(i));
+        }
+
+        // Pop characters to form reversed string
+        String uc5Reversed = "";
+        while (!stack.isEmpty()) {
+            uc5Reversed = uc5Reversed + stack.pop();
+        }
+
+        // Check palindrome
+        if (lowerCaseUC5.equals(uc5Reversed)) {
+            System.out.println("UC5: The word \"" + uc5Word + "\" is a Palindrome (Using Stack).");
+        } else {
+            System.out.println("UC5: The word \"" + uc5Word + "\" is NOT a Palindrome (Using Stack).");
+        }
+        System.out.println("UC5 Completed Successfully.");
         System.out.println("-------------------------------------");
     }
 }
