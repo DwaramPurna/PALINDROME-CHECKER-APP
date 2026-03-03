@@ -1,4 +1,6 @@
 import java.util.Stack;
+import java.util.Queue;
+import java.util.LinkedList;
 
 public class Main {
 
@@ -20,15 +22,13 @@ public class Main {
         System.out.println();
 
         // ================= UC2: Hardcoded Palindrome Check =================
-        String uc2Word = "level";  // Hardcoded string for UC2
+        String uc2Word = "level";
 
-        // Reverse string (UC2 logic)
         String uc2Reversed = "";
         for (int i = uc2Word.length() - 1; i >= 0; i--) {
             uc2Reversed = uc2Reversed + uc2Word.charAt(i);
         }
 
-        // Check palindrome (case-sensitive)
         if (uc2Word.equals(uc2Reversed)) {
             System.out.println("UC2: The word \"" + uc2Word + "\" is a Palindrome.");
         } else {
@@ -38,16 +38,14 @@ public class Main {
         System.out.println("-------------------------------------");
         System.out.println();
 
-        // ================= UC3: Palindrome Check Using String Reverse =================
-        String uc3Word = "Level"; // Hardcoded string for UC3 (mixed case)
+        // ================= UC3: Case-Insensitive Palindrome Check =================
+        String uc3Word = "Level";
 
-        // Reverse string using loop
         String uc3Reversed = "";
         for (int i = uc3Word.length() - 1; i >= 0; i--) {
             uc3Reversed = uc3Reversed + uc3Word.charAt(i);
         }
 
-        // Compare original and reversed using equalsIgnoreCase (case-insensitive)
         if (uc3Word.equalsIgnoreCase(uc3Reversed)) {
             System.out.println("UC3: The word \"" + uc3Word + "\" is a Palindrome (Case-Insensitive).");
         } else {
@@ -58,14 +56,13 @@ public class Main {
         System.out.println();
 
         // ================= UC4: Character Array Based Palindrome Check =================
-        String uc4Word = "Level"; // Hardcoded string for UC4 (mixed case)
-        char[] charArray = uc4Word.toLowerCase().toCharArray(); // Convert to lowercase
+        String uc4Word = "Level";
+        char[] charArray = uc4Word.toLowerCase().toCharArray();
 
         boolean isPalindromeUC4 = true;
         int start = 0;
         int end = charArray.length - 1;
 
-        // Two-pointer technique
         while (start < end) {
             if (charArray[start] != charArray[end]) {
                 isPalindromeUC4 = false;
@@ -75,7 +72,6 @@ public class Main {
             end--;
         }
 
-        // Display result
         if (isPalindromeUC4) {
             System.out.println("UC4: The word \"" + uc4Word + "\" is a Palindrome (Using char array).");
         } else {
@@ -86,28 +82,62 @@ public class Main {
         System.out.println();
 
         // ================= UC5: Stack-Based Palindrome Check =================
-        String uc5Word = "Level"; // Hardcoded string for UC5 (mixed case)
+        String uc5Word = "Level";
         String lowerCaseUC5 = uc5Word.toLowerCase();
         Stack<Character> stack = new Stack<>();
 
-        // Push each character into stack
         for (int i = 0; i < lowerCaseUC5.length(); i++) {
             stack.push(lowerCaseUC5.charAt(i));
         }
 
-        // Pop characters to form reversed string
         String uc5Reversed = "";
         while (!stack.isEmpty()) {
             uc5Reversed = uc5Reversed + stack.pop();
         }
 
-        // Check palindrome
         if (lowerCaseUC5.equals(uc5Reversed)) {
             System.out.println("UC5: The word \"" + uc5Word + "\" is a Palindrome (Using Stack).");
         } else {
             System.out.println("UC5: The word \"" + uc5Word + "\" is NOT a Palindrome (Using Stack).");
         }
         System.out.println("UC5 Completed Successfully.");
+        System.out.println("-------------------------------------");
+        System.out.println();
+
+        // ================= UC6: Queue + Stack Based Palindrome Check =================
+        String uc6Word = "Level";
+        String lowerCaseUC6 = uc6Word.toLowerCase();
+
+        Stack<Character> uc6Stack = new Stack<>();
+        Queue<Character> uc6Queue = new LinkedList<>();
+
+        // Enqueue and Push characters
+        for (int i = 0; i < lowerCaseUC6.length(); i++) {
+            char ch = lowerCaseUC6.charAt(i);
+            uc6Stack.push(ch);      // LIFO
+            uc6Queue.add(ch);       // FIFO
+        }
+
+        boolean isPalindromeUC6 = true;
+
+        // Compare dequeue (FIFO) and pop (LIFO)
+        while (!uc6Queue.isEmpty()) {
+            char fromQueue = uc6Queue.remove();   // Dequeue
+            char fromStack = uc6Stack.pop();      // Pop
+
+            if (fromQueue != fromStack) {
+                isPalindromeUC6 = false;
+                break;
+            }
+        }
+
+        if (isPalindromeUC6) {
+            System.out.println("UC6: The word \"" + uc6Word + "\" is a Palindrome (Using Queue + Stack).");
+        } else {
+            System.out.println("UC6: The word \"" + uc6Word + "\" is NOT a Palindrome (Using Queue + Stack).");
+        }
+
+        System.out.println("UC6 Completed Successfully.");
         System.out.println("-------------------------------------");
     }
 }
