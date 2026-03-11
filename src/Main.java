@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Main {
 
-    // UC9 – Recursive Palindrome Function
+    // UC9 Recursive Palindrome
     static boolean recursivePalindrome(String str, int start, int end) {
         if (start >= end)
             return true;
@@ -13,7 +13,7 @@ public class Main {
         return recursivePalindrome(str, start + 1, end - 1);
     }
 
-    // Node class for UC8 Linked List
+    // UC8 Linked List Node
     static class Node {
         char data;
         Node next;
@@ -29,6 +29,7 @@ public class Main {
 
         for (char c : str.toCharArray()) {
             Node newNode = new Node(c);
+
             if (head == null) {
                 head = newNode;
                 temp = head;
@@ -60,41 +61,46 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Palindrome Checker App");
+        // UC1 Welcome Message
+        System.out.println("===== Palindrome Checker App =====");
+
         System.out.print("Enter a string: ");
         String input = sc.nextLine();
 
-        // UC2 Basic
+        // UC2 Basic Palindrome
         String reversed = new StringBuilder(input).reverse().toString();
-        System.out.println("UC2 Basic: " + input.equals(reversed));
+        System.out.println("UC2 Basic Palindrome: " + input.equals(reversed));
 
-        // UC3 Case Insensitive
-        System.out.println("UC3 Case Insensitive: " +
-                input.equalsIgnoreCase(reversed));
+        // UC3 Case Insensitive Palindrome
+        System.out.println("UC3 Case Insensitive: " + input.equalsIgnoreCase(reversed));
 
-        // UC4 Character Array
+        // UC4 Character Array Method
         char[] arr = input.toCharArray();
-        boolean isPal = true;
+        boolean charArrayPalindrome = true;
 
         for (int i = 0; i < arr.length / 2; i++) {
-            if (arr[i] != arr[arr.length - i - 1]) {
-                isPal = false;
+            if (arr[i] != arr[arr.length - 1 - i]) {
+                charArrayPalindrome = false;
                 break;
             }
         }
 
-        System.out.println("UC4 Char Array: " + isPal);
+        System.out.println("UC4 Character Array: " + charArrayPalindrome);
 
-        // UC5 Stack
+        // UC5 Stack Method
         Stack<Character> stack = new Stack<>();
-        for (char c : input.toCharArray())
+
+        for (char c : input.toCharArray()) {
             stack.push(c);
+        }
 
-        String stackRev = "";
-        while (!stack.isEmpty())
-            stackRev += stack.pop();
+        String stackReverse = "";
 
-        System.out.println("UC5 Stack: " + input.equals(stackRev));
+        while (!stack.isEmpty()) {
+            stackReverse += stack.pop();
+        }
+
+        System.out.println("UC5 Stack: " + input.equals(stackReverse));
 
         // UC6 Queue + Stack
         Queue<Character> queue = new LinkedList<>();
@@ -105,39 +111,49 @@ public class Main {
             stack2.push(c);
         }
 
-        boolean qsPal = true;
+        boolean queueStackPalindrome = true;
+
         while (!queue.isEmpty()) {
             if (queue.remove() != stack2.pop()) {
-                qsPal = false;
+                queueStackPalindrome = false;
                 break;
             }
         }
 
-        System.out.println("UC6 Queue + Stack: " + qsPal);
+        System.out.println("UC6 Queue + Stack: " + queueStackPalindrome);
 
-        // UC7 Deque
+        // UC7 Deque Method
         Deque<Character> deque = new ArrayDeque<>();
 
-        for (char c : input.toCharArray())
+        for (char c : input.toCharArray()) {
             deque.add(c);
+        }
 
-        boolean dqPal = true;
+        boolean dequePalindrome = true;
 
         while (deque.size() > 1) {
             if (deque.removeFirst() != deque.removeLast()) {
-                dqPal = false;
+                dequePalindrome = false;
                 break;
             }
         }
 
-        System.out.println("UC7 Deque: " + dqPal);
+        System.out.println("UC7 Deque: " + dequePalindrome);
 
         // UC8 Linked List
         System.out.println("UC8 Linked List: " + linkedListPalindrome(input));
 
         // UC9 Recursion
-        boolean recPal = recursivePalindrome(input, 0, input.length() - 1);
-        System.out.println("UC9 Recursion: " + recPal);
+        boolean recursiveResult = recursivePalindrome(input, 0, input.length() - 1);
+        System.out.println("UC9 Recursion: " + recursiveResult);
+
+        // UC10 Ignore Spaces and Case
+        String normalized = input.replaceAll("\\s+", "").toLowerCase();
+        String normalizedReverse = new StringBuilder(normalized).reverse().toString();
+
+        boolean uc10Palindrome = normalized.equals(normalizedReverse);
+
+        System.out.println("UC10 Ignore Spaces & Case: " + uc10Palindrome);
 
         sc.close();
     }
