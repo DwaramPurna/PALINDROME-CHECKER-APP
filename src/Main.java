@@ -1,144 +1,220 @@
-import java.util.Stack;
-import java.util.Queue;
-import java.util.LinkedList;
-import java.util.Deque;
-import java.util.ArrayDeque;
+import java.util.*;
 
 public class Main {
 
-    // Application constants
-    private static final String APP_NAME = "Palindrome Checker App";
-    private static final String VERSION = "Version 1.0";
+    // ================= UC8 Linked List Node =================
+    static class Node {
+        char data;
+        Node next;
+
+        Node(char data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
 
     public static void main(String[] args) {
 
         // ================= UC1 =================
         System.out.println("=====================================");
-        System.out.println("      " + APP_NAME);
-        System.out.println("      " + VERSION);
+        System.out.println("       Palindrome Checker App");
+        System.out.println("       Version 1.0");
         System.out.println("=====================================");
         System.out.println("Welcome to the Palindrome Checker Application!");
+        System.out.println("This application validates whether a given string is a palindrome.");
         System.out.println("-------------------------------------");
         System.out.println("UC1 Completed Successfully.\n");
 
+
         // ================= UC2 =================
         String uc2Word = "level";
-        String uc2Reversed = "";
 
-        for (int i = uc2Word.length() - 1; i >= 0; i--) {
-            uc2Reversed += uc2Word.charAt(i);
+        String reversed = "";
+        for(int i = uc2Word.length()-1; i >= 0; i--){
+            reversed += uc2Word.charAt(i);
         }
 
-        System.out.println("UC2: " + (uc2Word.equals(uc2Reversed)
-                ? "Palindrome"
-                : "Not Palindrome"));
+        if(uc2Word.equals(reversed))
+            System.out.println("UC2: " + uc2Word + " is Palindrome");
+        else
+            System.out.println("UC2: " + uc2Word + " is NOT Palindrome");
+
         System.out.println("UC2 Completed Successfully.\n");
+
 
         // ================= UC3 =================
         String uc3Word = "Level";
-        String uc3Reversed = "";
 
-        for (int i = uc3Word.length() - 1; i >= 0; i--) {
-            uc3Reversed += uc3Word.charAt(i);
+        reversed = "";
+        for(int i = uc3Word.length()-1; i >= 0; i--){
+            reversed += uc3Word.charAt(i);
         }
 
-        System.out.println("UC3: " + (uc3Word.equalsIgnoreCase(uc3Reversed)
-                ? "Palindrome (Case-Insensitive)"
-                : "Not Palindrome"));
+        if(uc3Word.equalsIgnoreCase(reversed))
+            System.out.println("UC3: " + uc3Word + " is Palindrome (Case Insensitive)");
+        else
+            System.out.println("UC3: " + uc3Word + " is NOT Palindrome");
+
         System.out.println("UC3 Completed Successfully.\n");
+
 
         // ================= UC4 =================
         String uc4Word = "Level";
-        char[] charArray = uc4Word.toLowerCase().toCharArray();
+        char[] arr = uc4Word.toLowerCase().toCharArray();
 
-        boolean isPalindromeUC4 = true;
-        int start = 0, end = charArray.length - 1;
+        int start = 0;
+        int end = arr.length-1;
+        boolean isPalindrome = true;
 
-        while (start < end) {
-            if (charArray[start] != charArray[end]) {
-                isPalindromeUC4 = false;
+        while(start < end){
+            if(arr[start] != arr[end]){
+                isPalindrome = false;
                 break;
             }
             start++;
             end--;
         }
 
-        System.out.println("UC4: " + (isPalindromeUC4
-                ? "Palindrome (Using char array)"
-                : "Not Palindrome"));
+        if(isPalindrome)
+            System.out.println("UC4: " + uc4Word + " is Palindrome (Char Array)");
+        else
+            System.out.println("UC4: " + uc4Word + " is NOT Palindrome");
+
         System.out.println("UC4 Completed Successfully.\n");
 
-        // ================= UC5 =================
-        String uc5Word = "Level";
-        String lowerCaseUC5 = uc5Word.toLowerCase();
+
+        // ================= UC5 (Stack) =================
+        String uc5Word = "Level".toLowerCase();
+
         Stack<Character> stack = new Stack<>();
 
-        for (char ch : lowerCaseUC5.toCharArray()) {
-            stack.push(ch);
+        for(char c : uc5Word.toCharArray()){
+            stack.push(c);
         }
 
-        String uc5Reversed = "";
-        while (!stack.isEmpty()) {
-            uc5Reversed += stack.pop();
+        reversed = "";
+        while(!stack.isEmpty()){
+            reversed += stack.pop();
         }
 
-        System.out.println("UC5: " + (lowerCaseUC5.equals(uc5Reversed)
-                ? "Palindrome (Using Stack)"
-                : "Not Palindrome"));
+        if(uc5Word.equals(reversed))
+            System.out.println("UC5: Palindrome using Stack");
+        else
+            System.out.println("UC5: NOT Palindrome using Stack");
+
         System.out.println("UC5 Completed Successfully.\n");
 
-        // ================= UC6 =================
-        String uc6Word = "Level";
-        String lowerCaseUC6 = uc6Word.toLowerCase();
 
-        Stack<Character> uc6Stack = new Stack<>();
-        Queue<Character> uc6Queue = new LinkedList<>();
+        // ================= UC6 (Queue + Stack) =================
+        String uc6Word = "Level".toLowerCase();
 
-        for (char ch : lowerCaseUC6.toCharArray()) {
-            uc6Stack.push(ch);
-            uc6Queue.add(ch);
+        Stack<Character> s = new Stack<>();
+        Queue<Character> q = new LinkedList<>();
+
+        for(char c : uc6Word.toCharArray()){
+            s.push(c);
+            q.add(c);
         }
 
-        boolean isPalindromeUC6 = true;
+        boolean result = true;
 
-        while (!uc6Queue.isEmpty()) {
-            if (!uc6Queue.remove().equals(uc6Stack.pop())) {
-                isPalindromeUC6 = false;
+        while(!q.isEmpty()){
+            if(q.remove() != s.pop()){
+                result = false;
                 break;
             }
         }
 
-        System.out.println("UC6: " + (isPalindromeUC6
-                ? "Palindrome (Using Queue + Stack)"
-                : "Not Palindrome"));
+        if(result)
+            System.out.println("UC6: Palindrome using Stack + Queue");
+        else
+            System.out.println("UC6: NOT Palindrome");
+
         System.out.println("UC6 Completed Successfully.\n");
 
-        // ================= UC7 =================
-        String uc7Word = "Level";
-        String lowerCaseUC7 = uc7Word.toLowerCase();
 
-        Deque<Character> deque = new ArrayDeque<>();
+        // ================= UC7 (Deque) =================
+        String uc7Word = "Level".toLowerCase();
 
-        // Insert characters
-        for (char ch : lowerCaseUC7.toCharArray()) {
-            deque.addLast(ch);
+        Deque<Character> deque = new LinkedList<>();
+
+        for(char c : uc7Word.toCharArray()){
+            deque.add(c);
         }
 
-        boolean isPalindromeUC7 = true;
+        boolean isDequePalindrome = true;
 
-        // Compare front & rear
-        while (deque.size() > 1) {
-            if (!deque.removeFirst().equals(deque.removeLast())) {
-                isPalindromeUC7 = false;
+        while(deque.size() > 1){
+            char first = deque.removeFirst();
+            char last = deque.removeLast();
+
+            if(first != last){
+                isDequePalindrome = false;
                 break;
             }
         }
 
-        System.out.println("UC7: " + (isPalindromeUC7
-                ? "Palindrome (Using Deque)"
-                : "Not Palindrome"));
+        if(isDequePalindrome)
+            System.out.println("UC7: Palindrome using Deque");
+        else
+            System.out.println("UC7: NOT Palindrome");
+
         System.out.println("UC7 Completed Successfully.\n");
 
-        System.out.println("All Use Cases Completed Successfully.");
+
+        // ================= UC8 (Linked List) =================
+        String uc8Word = "level".toLowerCase();
+
+        Node head = null, tail = null;
+
+        for(char c : uc8Word.toCharArray()){
+            Node newNode = new Node(c);
+
+            if(head == null){
+                head = tail = newNode;
+            }else{
+                tail.next = newNode;
+                tail = newNode;
+            }
+        }
+
+        Node slow = head;
+        Node fast = head;
+
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        Node prev = null;
+        Node current = slow;
+
+        while(current != null){
+            Node next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+
+        Node firstHalf = head;
+        Node secondHalf = prev;
+
+        boolean isLinkedPalindrome = true;
+
+        while(secondHalf != null){
+            if(firstHalf.data != secondHalf.data){
+                isLinkedPalindrome = false;
+                break;
+            }
+            firstHalf = firstHalf.next;
+            secondHalf = secondHalf.next;
+        }
+
+        if(isLinkedPalindrome)
+            System.out.println("UC8: Palindrome using Linked List");
+        else
+            System.out.println("UC8: NOT Palindrome");
+
+        System.out.println("UC8 Completed Successfully.");
     }
 }
