@@ -207,11 +207,72 @@ public class Main {
         System.out.println("\nUC12: Enter a word to check using Strategy Pattern:");
         String uc12Word = sc.nextLine();
 
-        // Choose strategy at runtime
         PalindromeChecker checker = new PalindromeChecker(new StackStrategy());
         System.out.println("Using StackStrategy: " + (checker.check(uc12Word) ? "Palindrome" : "NOT Palindrome"));
 
         checker.setStrategy(new DequeStrategy());
         System.out.println("Using DequeStrategy: " + (checker.check(uc12Word) ? "Palindrome" : "NOT Palindrome"));
+
+        // ================= UC13: Performance Comparison =================
+        System.out.println("\nUC13: Performance Comparison of different algorithms");
+        String testWord = "Level".repeat(10000); // large input for timing
+
+        // Stack Strategy
+        long startTimeStack = System.nanoTime();
+        new StackStrategy().isPalindrome(testWord);
+        long endTimeStack = System.nanoTime();
+        System.out.println("StackStrategy execution time: " + (endTimeStack - startTimeStack) + " ns");
+
+        // Deque Strategy
+        long startTimeDeque = System.nanoTime();
+        new DequeStrategy().isPalindrome(testWord);
+        long endTimeDeque = System.nanoTime();
+        System.out.println("DequeStrategy execution time: " + (endTimeDeque - startTimeDeque) + " ns");
+
+        // Char Array
+        long startTimeCharArray = System.nanoTime();
+        char[] arr13 = testWord.toLowerCase().toCharArray();
+        boolean charArrayPal = true;
+        int s13 = 0, e13 = arr13.length - 1;
+        while (s13 < e13) {
+            if (arr13[s13] != arr13[e13]) {
+                charArrayPal = false;
+                break;
+            }
+            s13++;
+            e13--;
+        }
+        long endTimeCharArray = System.nanoTime();
+        System.out.println("CharArray execution time: " + (endTimeCharArray - startTimeCharArray) + " ns");
+
+        // Linked List
+        long startTimeLinkedList = System.nanoTime();
+        Node h = null, t = null;
+        for (char c : testWord.toLowerCase().toCharArray()) {
+            Node n = new Node(c);
+            if (h == null) h = t = n;
+            else { t.next = n; t = n; }
+        }
+        Node slowL = h, fastL = h;
+        while (fastL != null && fastL.next != null) { slowL = slowL.next; fastL = fastL.next.next; }
+        Node prevL = null, currL = slowL;
+        while (currL != null) { Node nxt = currL.next; currL.next = prevL; prevL = currL; currL = nxt; }
+        Node fh = h, sh = prevL;
+        boolean linkedPal = true;
+        while (sh != null) { if (fh.data != sh.data) { linkedPal = false; break; } fh = fh.next; sh = sh.next; }
+        long endTimeLinkedList = System.nanoTime();
+        System.out.println("LinkedList execution time: " + (endTimeLinkedList - startTimeLinkedList) + " ns");
+
+        // Queue + Stack
+        long startTimeQS = System.nanoTime();
+        Stack<Character> st = new Stack<>();
+        Queue<Character> que = new LinkedList<>();
+        for (char c : testWord.toLowerCase().toCharArray()) { st.push(c); que.add(c); }
+        boolean qsPal = true;
+        while (!que.isEmpty()) { if (que.remove() != st.pop()) { qsPal = false; break; } }
+        long endTimeQS = System.nanoTime();
+        System.out.println("Queue+Stack execution time: " + (endTimeQS - startTimeQS) + " ns");
+
+        System.out.println("UC13 Completed Successfully.");
     }
 }
