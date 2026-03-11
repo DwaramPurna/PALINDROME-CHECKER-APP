@@ -1,160 +1,144 @@
-import java.util.*;
+import java.util.Stack;
+import java.util.Queue;
+import java.util.LinkedList;
+import java.util.Deque;
+import java.util.ArrayDeque;
 
 public class Main {
 
-    // UC9 Recursive Palindrome
-    static boolean recursivePalindrome(String str, int start, int end) {
-        if (start >= end)
-            return true;
-
-        if (str.charAt(start) != str.charAt(end))
-            return false;
-
-        return recursivePalindrome(str, start + 1, end - 1);
-    }
-
-    // UC8 Linked List Node
-    static class Node {
-        char data;
-        Node next;
-
-        Node(char data) {
-            this.data = data;
-            this.next = null;
-        }
-    }
-
-    static Node createLinkedList(String str) {
-        Node head = null, temp = null;
-
-        for (char c : str.toCharArray()) {
-            Node newNode = new Node(c);
-
-            if (head == null) {
-                head = newNode;
-                temp = head;
-            } else {
-                temp.next = newNode;
-                temp = temp.next;
-            }
-        }
-        return head;
-    }
-
-    static boolean linkedListPalindrome(String str) {
-        Node head = createLinkedList(str);
-
-        String original = "";
-        Node temp = head;
-
-        while (temp != null) {
-            original += temp.data;
-            temp = temp.next;
-        }
-
-        String reversed = new StringBuilder(original).reverse().toString();
-
-        return original.equals(reversed);
-    }
+    // Application constants
+    private static final String APP_NAME = "Palindrome Checker App";
+    private static final String VERSION = "Version 1.0";
 
     public static void main(String[] args) {
 
-        Scanner sc = new Scanner(System.in);
+        // ================= UC1 =================
+        System.out.println("=====================================");
+        System.out.println("      " + APP_NAME);
+        System.out.println("      " + VERSION);
+        System.out.println("=====================================");
+        System.out.println("Welcome to the Palindrome Checker Application!");
+        System.out.println("-------------------------------------");
+        System.out.println("UC1 Completed Successfully.\n");
 
-        // UC1 Welcome Message
-        System.out.println("===== Palindrome Checker App =====");
+        // ================= UC2 =================
+        String uc2Word = "level";
+        String uc2Reversed = "";
 
-        System.out.print("Enter a string: ");
-        String input = sc.nextLine();
-
-        // UC2 Basic Palindrome
-        String reversed = new StringBuilder(input).reverse().toString();
-        System.out.println("UC2 Basic Palindrome: " + input.equals(reversed));
-
-        // UC3 Case Insensitive Palindrome
-        System.out.println("UC3 Case Insensitive: " + input.equalsIgnoreCase(reversed));
-
-        // UC4 Character Array Method
-        char[] arr = input.toCharArray();
-        boolean charArrayPalindrome = true;
-
-        for (int i = 0; i < arr.length / 2; i++) {
-            if (arr[i] != arr[arr.length - 1 - i]) {
-                charArrayPalindrome = false;
-                break;
-            }
+        for (int i = uc2Word.length() - 1; i >= 0; i--) {
+            uc2Reversed += uc2Word.charAt(i);
         }
 
-        System.out.println("UC4 Character Array: " + charArrayPalindrome);
+        System.out.println("UC2: " + (uc2Word.equals(uc2Reversed)
+                ? "Palindrome"
+                : "Not Palindrome"));
+        System.out.println("UC2 Completed Successfully.\n");
 
-        // UC5 Stack Method
+        // ================= UC3 =================
+        String uc3Word = "Level";
+        String uc3Reversed = "";
+
+        for (int i = uc3Word.length() - 1; i >= 0; i--) {
+            uc3Reversed += uc3Word.charAt(i);
+        }
+
+        System.out.println("UC3: " + (uc3Word.equalsIgnoreCase(uc3Reversed)
+                ? "Palindrome (Case-Insensitive)"
+                : "Not Palindrome"));
+        System.out.println("UC3 Completed Successfully.\n");
+
+        // ================= UC4 =================
+        String uc4Word = "Level";
+        char[] charArray = uc4Word.toLowerCase().toCharArray();
+
+        boolean isPalindromeUC4 = true;
+        int start = 0, end = charArray.length - 1;
+
+        while (start < end) {
+            if (charArray[start] != charArray[end]) {
+                isPalindromeUC4 = false;
+                break;
+            }
+            start++;
+            end--;
+        }
+
+        System.out.println("UC4: " + (isPalindromeUC4
+                ? "Palindrome (Using char array)"
+                : "Not Palindrome"));
+        System.out.println("UC4 Completed Successfully.\n");
+
+        // ================= UC5 =================
+        String uc5Word = "Level";
+        String lowerCaseUC5 = uc5Word.toLowerCase();
         Stack<Character> stack = new Stack<>();
 
-        for (char c : input.toCharArray()) {
-            stack.push(c);
+        for (char ch : lowerCaseUC5.toCharArray()) {
+            stack.push(ch);
         }
 
-        String stackReverse = "";
-
+        String uc5Reversed = "";
         while (!stack.isEmpty()) {
-            stackReverse += stack.pop();
+            uc5Reversed += stack.pop();
         }
 
-        System.out.println("UC5 Stack: " + input.equals(stackReverse));
+        System.out.println("UC5: " + (lowerCaseUC5.equals(uc5Reversed)
+                ? "Palindrome (Using Stack)"
+                : "Not Palindrome"));
+        System.out.println("UC5 Completed Successfully.\n");
 
-        // UC6 Queue + Stack
-        Queue<Character> queue = new LinkedList<>();
-        Stack<Character> stack2 = new Stack<>();
+        // ================= UC6 =================
+        String uc6Word = "Level";
+        String lowerCaseUC6 = uc6Word.toLowerCase();
 
-        for (char c : input.toCharArray()) {
-            queue.add(c);
-            stack2.push(c);
+        Stack<Character> uc6Stack = new Stack<>();
+        Queue<Character> uc6Queue = new LinkedList<>();
+
+        for (char ch : lowerCaseUC6.toCharArray()) {
+            uc6Stack.push(ch);
+            uc6Queue.add(ch);
         }
 
-        boolean queueStackPalindrome = true;
+        boolean isPalindromeUC6 = true;
 
-        while (!queue.isEmpty()) {
-            if (queue.remove() != stack2.pop()) {
-                queueStackPalindrome = false;
+        while (!uc6Queue.isEmpty()) {
+            if (!uc6Queue.remove().equals(uc6Stack.pop())) {
+                isPalindromeUC6 = false;
                 break;
             }
         }
 
-        System.out.println("UC6 Queue + Stack: " + queueStackPalindrome);
+        System.out.println("UC6: " + (isPalindromeUC6
+                ? "Palindrome (Using Queue + Stack)"
+                : "Not Palindrome"));
+        System.out.println("UC6 Completed Successfully.\n");
 
-        // UC7 Deque Method
+        // ================= UC7 =================
+        String uc7Word = "Level";
+        String lowerCaseUC7 = uc7Word.toLowerCase();
+
         Deque<Character> deque = new ArrayDeque<>();
 
-        for (char c : input.toCharArray()) {
-            deque.add(c);
+        // Insert characters
+        for (char ch : lowerCaseUC7.toCharArray()) {
+            deque.addLast(ch);
         }
 
-        boolean dequePalindrome = true;
+        boolean isPalindromeUC7 = true;
 
+        // Compare front & rear
         while (deque.size() > 1) {
-            if (deque.removeFirst() != deque.removeLast()) {
-                dequePalindrome = false;
+            if (!deque.removeFirst().equals(deque.removeLast())) {
+                isPalindromeUC7 = false;
                 break;
             }
         }
 
-        System.out.println("UC7 Deque: " + dequePalindrome);
+        System.out.println("UC7: " + (isPalindromeUC7
+                ? "Palindrome (Using Deque)"
+                : "Not Palindrome"));
+        System.out.println("UC7 Completed Successfully.\n");
 
-        // UC8 Linked List
-        System.out.println("UC8 Linked List: " + linkedListPalindrome(input));
-
-        // UC9 Recursion
-        boolean recursiveResult = recursivePalindrome(input, 0, input.length() - 1);
-        System.out.println("UC9 Recursion: " + recursiveResult);
-
-        // UC10 Ignore Spaces and Case
-        String normalized = input.replaceAll("\\s+", "").toLowerCase();
-        String normalizedReverse = new StringBuilder(normalized).reverse().toString();
-
-        boolean uc10Palindrome = normalized.equals(normalizedReverse);
-
-        System.out.println("UC10 Ignore Spaces & Case: " + uc10Palindrome);
-
-        sc.close();
+        System.out.println("All Use Cases Completed Successfully.");
     }
 }
