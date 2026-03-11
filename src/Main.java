@@ -13,6 +13,26 @@ public class Main {
         }
     }
 
+    // ================= UC11: Count palindrome words in a sentence =================
+    public static void countPalindromeWords(String sentence) {
+        String[] words = sentence.toLowerCase().split("\\s+");
+        int count = 0;
+
+        for (String word : words) {
+            String reversed = "";
+            for (int i = word.length() - 1; i >= 0; i--) {
+                reversed += word.charAt(i);
+            }
+            if (word.equals(reversed)) {
+                count++;
+                System.out.println("Palindrome word: " + word);
+            }
+        }
+
+        System.out.println("UC11: Total palindrome words in sentence: " + count);
+        System.out.println("UC11 Completed Successfully.\n");
+    }
+
     public static void main(String[] args) {
 
         // ================= UC1 =================
@@ -24,7 +44,6 @@ public class Main {
         System.out.println("This application validates whether a given string is a palindrome.");
         System.out.println("-------------------------------------");
         System.out.println("UC1 Completed Successfully.\n");
-
 
         // ================= UC2 =================
         String uc2Word = "level";
@@ -41,7 +60,6 @@ public class Main {
 
         System.out.println("UC2 Completed Successfully.\n");
 
-
         // ================= UC3 =================
         String uc3Word = "Level";
 
@@ -56,7 +74,6 @@ public class Main {
             System.out.println("UC3: " + uc3Word + " is NOT Palindrome");
 
         System.out.println("UC3 Completed Successfully.\n");
-
 
         // ================= UC4 =================
         String uc4Word = "Level";
@@ -82,7 +99,6 @@ public class Main {
 
         System.out.println("UC4 Completed Successfully.\n");
 
-
         // ================= UC5 (Stack) =================
         String uc5Word = "Level".toLowerCase();
 
@@ -103,7 +119,6 @@ public class Main {
             System.out.println("UC5: NOT Palindrome using Stack");
 
         System.out.println("UC5 Completed Successfully.\n");
-
 
         // ================= UC6 (Queue + Stack) =================
         String uc6Word = "Level".toLowerCase();
@@ -132,7 +147,6 @@ public class Main {
 
         System.out.println("UC6 Completed Successfully.\n");
 
-
         // ================= UC7 (Deque) =================
         String uc7Word = "Level".toLowerCase();
 
@@ -160,7 +174,6 @@ public class Main {
             System.out.println("UC7: NOT Palindrome");
 
         System.out.println("UC7 Completed Successfully.\n");
-
 
         // ================= UC8 (Linked List) =================
         String uc8Word = "level".toLowerCase();
@@ -215,6 +228,12 @@ public class Main {
         else
             System.out.println("UC8: NOT Palindrome");
 
-        System.out.println("UC8 Completed Successfully.");
+        System.out.println("UC8 Completed Successfully.\n");
+
+        // ================= UC11 =================
+        System.out.println("\nUC11: Enter a sentence to count palindrome words:");
+        Scanner sc = new Scanner(System.in);
+        String sentence = sc.nextLine();
+        countPalindromeWords(sentence);
     }
 }
